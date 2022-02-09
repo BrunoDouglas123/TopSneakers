@@ -32,9 +32,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private Environment env;
 
+	@SuppressWarnings("unused")
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
+		    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		    final CorsConfiguration config = new CorsConfiguration();
 			http.headers().frameOptions().disable();
 		}
 		
@@ -42,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.authorizeRequests().anyRequest().permitAll();
 	}
-	
+
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
@@ -52,10 +55,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return source;
 	}
 	
+	@SuppressWarnings("serial")
 	private List<ResponseMessage> responseMessageForGET()
 	{
 	    return new ArrayList<ResponseMessage>() {{
 	        add(new ResponseMessageBuilder()
+		         .code(200)
+		         .message("200 message")
+		         .responseModel(new ModelRef("Accepted"))
+		         .build());
+	    	add(new ResponseMessageBuilder()
 	            .code(500)
 	            .message("500 message")
 	            .responseModel(new ModelRef("Error"))

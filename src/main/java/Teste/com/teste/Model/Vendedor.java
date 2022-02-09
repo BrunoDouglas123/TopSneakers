@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table
+@Table(name = "venda")
 public class Vendedor {
 	
 	@Id
@@ -28,7 +28,7 @@ public class Vendedor {
 	public Vendedor() {
 	}
 
-	public Vendedor(Long id, String nome) {
+	public Vendedor(Long id, String nome, Object object) {
 		this.id = id;
 		this.nome = nome;
 	}
