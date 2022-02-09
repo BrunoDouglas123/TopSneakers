@@ -23,54 +23,54 @@ import Teste.com.teste.Repository.VendedorRepository;
 public class VendedorTest {
 
 	@Autowired
-	private VendedorRepository usuarioRepository;
+	private VendedorRepository vendedorRepository;
 	
 	@Test
-	public void SearchUser () {
-		Vendedor usuario1 = new Vendedor
+	public void CreateSeller () {
+		Vendedor vendedor = new Vendedor
+		(1L, "Bruno", null);
+		vendedorRepository.save(vendedor);
+		assertNotNull(vendedor);
+	}
+	
+	@Test
+	public void SearchSeller () {
+		Vendedor vendedor1 = new Vendedor
 		(1L, "Bruno", null );
-		Vendedor usuario2 = new Vendedor
+		Vendedor vendedor2 = new Vendedor
 		(1L, "Karol", null);
-		List<Vendedor> usuarios = new ArrayList<>();
-		usuarios.add(usuario1);
-		usuarios.add(usuario2);
+		List<Vendedor> vendedores = new ArrayList<>();
+		vendedores.add(vendedor1);
+		vendedores.add(vendedor2);
 	}
 	
 	@Test
-	public void CreateUser () {
-		Vendedor usuario = new Vendedor
-		(1L, "Bruno", null);
-		usuarioRepository.save(usuario);
-		assertNotNull(usuario);
-	}
-	
-	@Test
-	public void DeleteUser () {
-		Vendedor usuario = new Vendedor
-		(1L, "Bruno", null);
-		usuarioRepository.save(usuario);
-		Long id = usuario.getId();
-		boolean presente1 = usuarioRepository
-		.findById(id).isPresent();
-		usuarioRepository.deleteById(id);
-		boolean presente2 = usuarioRepository
-		.findById(id).isPresent();
-		assertTrue(presente1);
-		assertFalse(presente2);
-	}
-	
-	@Test
-	public void UpdateUser () {
+	public void UpdateSeller () {
 		String nome = "Karol";
 		Vendedor Vendedor = new Vendedor
 		(1L, "Bruno", null);
-		usuarioRepository.save(Vendedor);
-		Vendedor user = usuarioRepository
+		vendedorRepository.save(Vendedor);
+		Vendedor sel = vendedorRepository
 		.findById(1L).get();
-		user.setNome(nome);
-		Vendedor use = usuarioRepository
-		.save(user);
+		sel.setNome(nome);
+		Vendedor use = vendedorRepository
+		.save(sel);
 		assertEquals(use.getNome(),nome);
+	}
+	
+	@Test
+	public void DeleteSeller () {
+		Vendedor vendedor = new Vendedor
+		(1L, "Bruno", null);
+		vendedorRepository.save(vendedor);
+		Long id = vendedor.getId();
+		boolean venda1 = vendedorRepository
+		.findById(id).isPresent();
+		vendedorRepository.deleteById(id);
+		boolean venda2 = vendedorRepository
+		.findById(id).isPresent();
+		assertTrue(venda1);
+		assertFalse(venda2);
 	}
 	
 }
